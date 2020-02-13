@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 
 // Note, the bits are counted from right to left. 
@@ -8,12 +8,22 @@ unsigned * get_bits(unsigned x,
                  unsigned start,
                  unsigned end) {
     
-   return NULL;
+   //return NULL;
     // YOUR CODE HERE
     // Returning NULL is a placeholder
     // get_bits dynamically allocates an array a and set a[i] = 1 when (i+start)-th bit
-    // of x is 1, otherwise siet a[i] = 0;
+    // of x is 1, otherwise set a[i] = 0;
     // At last, get_bits returns the address of the array.
+unsigned a[] = malloc(end);
+for(int i = 0; i < end; i++){
+   if((i + start) - x == 1){
+      a[i] = 1;
+   }
+   else {
+      a[i] = 0;
+   }
+}
+return a;
 }
 
 // Set the bits of x within range of [start, end], in which both are inclusive
@@ -26,6 +36,12 @@ void set_bits(unsigned * x,
     // No return value
     // v points to an array of at least (end-start+1) unsigned integers.
     // if v[i] == 0, then set (i+start)-th bit of x zero, otherwise, set (i+start)-th bit of x one.
+if((v[i] == 0)){
+   x[i+start] = 0;
+   }
+else {
+   x[i+start] = 1;
+}
 }
 
 // Flip the bits of x within range [start, end], in which both are inclusive.
@@ -34,6 +50,7 @@ void flip_bits(unsigned * x,
               unsigned start,
               unsigned end) {
     // YOUR CODE HERE
+   x = (~x);
 }
 
 
