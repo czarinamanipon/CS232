@@ -18,11 +18,11 @@ int main()
     
   for (i = 0; i < MAX; i++)
   {
-    text[i] = getchar();
+    text[i] = fgets(text, MAX, stdin);
     if (text[i] == '\n')
       break;
   }
-  length = i;
+  length = strlen(text) - 1;
   
   /* Analyse contents of text[]: */
     
