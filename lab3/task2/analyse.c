@@ -1,52 +1,38 @@
-/* Example: analysis of text */
-
 #include <stdio.h>
 #include <string.h>
+#define MAX_BUF 1024
 
-#define MAX 1000 /* The maximum number of characters in a line of input */
+int main () {
 
-int main()
-{
-  char text[MAX], c;
-  int i;
-  int lowercase, uppercase, digits, other;
-  int length;
+  /* Zero out the array */
+  int letter_frequency[26] = {0};
+  int len, i, n, j = 0, x = 0;
+  char buf[MAX_BUF];
   
-  puts("Type some text (then ENTER):");
-  
-  /* Save typed characters in text[]: */
-    
-  for (i = 0; i < MAX; i++)
-  {
-    text[i] = fgets(text, MAX, stdin);
-    if (text[i] == '\n')
-      break;
-  }
-  length = strlen(text) - 1;
-  
-  /* Analyse contents of text[]: */
-    
-  for (i = lowercase = uppercase = digits = other = 0; i < MAX; i++)
-  {
-    c = text[i];
-    if (c >= 'a' && c <= 'z')
-      lowercase++;
-    else if (c >= 'A' && c <= 'Z')
-      uppercase++;
-    else if (c >= '0' && c <= '9')
-      digits++;
-    else
-    {
-      if (c == '\n')
+  printf("Enter a string...\n");
+  for(j = 0; j < MAX_BUF; j++){
+      buf[j] = fgets(buf, MAX_BUF, stdin);
+      if (buf[j] == "\n")
         break;
-      other++;
-    }
   }
-  
-  puts("\nYou typed:");
-  printf("A string with %d characters\n", length);
-  printf("\t%d lower case letters\n", lowercase);
-  printf("\t%d upper case letters\n", uppercase);
-  printf("\t%d digits\n", digits);
-  printf("\t%d others\n", other);
+ 
+  len = strlen(buf);
+
+  do {
+      n = buf[x];
+      printf("n = %c\n", n);
+      if((n >= 'a') && (n <= 'z')){
+          letter_frequency[n] = letter_frequency[n] + 1;
+      } else if ((n >= 'A') && (n <= 'Z')){
+          letter_frequency[n - 32] = letter_frequency[n - 32] + 1;
+      }
+      x++;
+      len--;
+  } while (len > 1);
+
+  printf("Distribution of letters in corpus:\n");
+  for (i = 0; i < 26; i++) {
+    // 'A' is ASCII code 65
+    printf("%c: %d\n", 65+i, letter_frequency[i]);
+  }
 }
