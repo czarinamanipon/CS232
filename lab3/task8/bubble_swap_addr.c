@@ -43,26 +43,26 @@ int main()
             That is, write your own while/for loop to do this.
       (iii) You are allowed to use strlen() to calculate string lengths.
   */
-  char temp;
+  char *temp;
   for(i = 1; i < NUM; i++){
       if(Strings[i][j] > Strings[i + 1][j]){
-          temp = Strings[i + 1];
+          *temp = Strings[i + 1];
           Strings[i + 1] = Strings[i];
-          Strings[i] = temp;
+          Strings[i] = &temp;
           
       } else if(Strings[i][j] == Strings[i + 1][j]){
           for(j = 0; j < strlen(Strings[i]); j++){
               if(Strings[i][j + 1] > Strings[i + 1][j + 1]){
-                  temp = Strings[i + 1];
+                  *temp = Strings[i + 1];
                   Strings[i + 1] = Strings[i];
-                  Strings[i] = temp;
+                  Strings[i] = &temp;
                   break;
               }
           }
       }else if(Strings[i][j] < Strings[i + 1][j]){
-          temp = Strings[i];
+          *temp = Strings[i];
           Strings[i] = Strings[i + 1];
-          Strings[i] = temp;
+          Strings[i] = &temp;
       }
   }
   
