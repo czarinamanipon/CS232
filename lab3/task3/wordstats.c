@@ -6,25 +6,19 @@ int main () {
 
   /* Zero out the array */
   int letter_frequency[26] = {0};
-  int len = 0, i, n, j = 0, x = 0;
-  char buf[MAX_BUF];
+  int len = 0, i, j = 0, x = 0, letterIndex;
+  char buf[MAX_BUF], n;
   
   printf("Enter a string...\n");
-  for(j = 0; j < MAX_BUF; j++){
-      buf[j] = fgets(buf, MAX_BUF, stdin);
-      len++;
-      if (buf[j] == "\n")
-        break;
-  }
+  fgets(buf, MAX_BUF, stdin);
+  len = strlen(buf);
       
   do {
       n = buf[x];
-      printf("length = %i \n", len);
-      printf("buf[%i] = %c\n", x, buf[x]);
       if((n >= 97) && (n <= 122)){
-          letter_frequency[n]++;
+          letter_frequency[n - (32 + 65)]++;
       } else if ((n >= 65) && (n <= 90)){
-          letter_frequency[n - 32]++;
+          letter_frequency[n - 65]++;
       }
       x++;
       len--;
