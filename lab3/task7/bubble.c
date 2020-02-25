@@ -21,16 +21,14 @@ int main()
   */
   
   for(i = 0; i < NUM; i++){
-      for(j = 0; j < LEN - 2; j++){
-          Strings[i][j] = fgets(Strings[i], 1, stdin);
-      }
+      fgets(Strings[i], LEN - 2, stdin);
   }
 
   puts("\nHere are the strings in the order you entered:");
 
   /* Write a for loop here to print all the strings. */
   for(i = 0; i < NUM; i++){
-      printf("%c", &Strings[i]);
+      printf("%c", Strings[i]);
   }
   
   /* Bubble sort */
