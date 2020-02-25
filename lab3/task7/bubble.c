@@ -59,7 +59,7 @@ int main()
                   break;
               }
           }
-      }else if(String[i][j] < String[i + 1][j]){
+      }else if(Strings[i][j] < Strings[i + 1][j]){
           temp = Strings[i];
           Strings[i] = Strings[i + 1];
           Strings[i] = temp;
