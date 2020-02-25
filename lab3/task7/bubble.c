@@ -60,7 +60,7 @@ int main()
               }
           }
       }else if(String[i][j] < String[i + 1][j]){
-          temp = String[i];
+          temp = Strings[i];
           Strings[i] = Strings[i + 1];
           Strings[i] = temp;
       }
