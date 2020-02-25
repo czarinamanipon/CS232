@@ -53,7 +53,7 @@ int main()
       } else if(Strings[i][j] == Strings[i + 1][j]){
           for(j = 0; j < strlen(Strings[i]); j++){
               if(Strings[i][j + 1] > Strings[i + 1][j + 1]){
-                  temp = String[i + 1];
+                  temp = Strings[i + 1];
                   Strings[i + 1] = Strings[i];
                   Strings[i] = temp;
                   break;
