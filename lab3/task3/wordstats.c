@@ -12,6 +12,10 @@ int main () {
   printf("Enter a string...\n");
   fgets(buf, MAX_BUF, stdin);
   len = strlen(buf);
+  if(len > MAX_BUF){
+      printf("Error: String exceed maximum length.");
+      return 0;
+  }
       
   do {
       n = buf[x];
