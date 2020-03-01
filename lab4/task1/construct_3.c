@@ -6,15 +6,25 @@ typedef struct node {
 } node_t;
 
 node_t * construct_3() {
-    //Allocate three pointers: 
+    //Allocate three pointers:
     //x for the first Node, and temporary pointers y and z for the other two Nodes.
+    node_t *x, *y, *z;
 
     //Allocate three Node pointees and store references to them in the three pointers.
+    x = malloc(sizeof(int));
+    y = malloc(sizeof(int));
+    z = malloc(sizeof(int));
 
     //Dereference each pointer to store the appropriate number into the value field in its pointee.
+    x->value = 1;
+    y->value = 2;
+    z->value = 3;
 
-    //Dereference each pointer to access the .next field in its pointee, 
-    //and use pointer assignment to set the .next field to point to the appropriate Node. 
+    //Dereference each pointer to access the .next field in its pointee,
+    //and use pointer assignment to set the .next field to point to the appropriate Node.
+    x->next = y;
+    y->next = z;
+    z->next = x;
 
 }
 
@@ -34,8 +44,8 @@ int dump_all(node_t * x) {
     node_t * z = y->next;
     printf("%d -> %d\n", y->value, z->value);
     if(z->next != x) {
-    	printf("failed");
-	return -1;
+        printf("failed");
+        return -1;
     } else {
         printf("%d -> %d\n", z->value, x->value);
         return 0;
