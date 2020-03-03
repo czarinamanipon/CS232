@@ -9,6 +9,7 @@ int main(int argc, char * argv[]){
   *a = 10;  
 
   printf("%d\n", *a);
+  free(a);
 
   a = calloc(3, sizeof(int *));
   a[0] = 10;
