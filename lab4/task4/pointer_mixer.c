@@ -1,4 +1,4 @@
-// pointer_mixer was created for examination of several aspects
+﻿// pointer_mixer was created for examination of several aspects
 // of pointers:
 //   - sizeof() vs. strlen()
 //   - string init: pointer init. vs array init.
@@ -36,25 +36,25 @@ void readonly_vs_stack();
 //
 // ----------------------------------------------------------------------------
 int main(void) {
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     trace_pointers();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     trace_structs_pointers();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     strlen_vs_sizeof();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     pointer_math();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     pointer_casting();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     byte_ordering();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     simple_double_array();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     string_double_array_pointer_array();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     string_equal();
-    printf("---------------------------------------------\n");	
+    printf("---------------------------------------------\n");
     readonly_vs_stack();
 }
 
@@ -74,6 +74,12 @@ void strlen_vs_sizeof() {
     char * s = str;
 
     printf("strlen(str):%d sizeof(str):%d sizeof(str2):%d sizeof(s):%d, sizeof(*s):%d\n",
+    /* strlen(str):6
+       sizeof(str):7
+       sizeof(str2):9
+       sizeof(s):8
+       sizeof(*s):7
+    */
          (int) strlen(str),  //the length of the str
          (int) sizeof(str),  //the memory size of the str
          (int) sizeof(str2),  //the memory size of the str2
@@ -91,46 +97,52 @@ a   -> |             0 |              1 |             |              7 |
        .---.---.---.---.---.---.
 str -> | H | e | l | l | o | \0|
        '---'---'---'---'---'---'
-       <-------  7 bytes ------> 
+       <-------  7 bytes ------>
 */
 void pointer_math() {
     int a[] = {0,1,2,3,4,5,6,7};
     char str[] = "Hello!";
     //pointer arithmetic consideration of typing
     printf("a[3]:%d str[3]:%c\n", *(a+3),*(str+3));
+    //a[3]:3
+    //str[3]:l
     // I know you would not know what the actual addresses are, just comment
     // what you think (a+3-a) and (str+3-str) are.
     printf("a=%p a+3=%p (a+3-a)=%ld\n",a,a+3, ((long) (a+3)) - (long) a);
+    // (a+3-a)=12
     printf("str=%p str+3=%p (str+3-str)=%ld\n",str,str+3, ((long) (str+3)) - (long) str);
+    // (str+3-str)=3
 }
 // ----------------------------------------------------------------------------
 
-//Do we have to store chars in char array? 
+//Do we have to store chars in char array?
 void pointer_casting() {
     char s[4]; //allocate 4bytes
     s[0] = 255;//255 is largest uint value in 1-byte
     s[1] = 255;
     s[2] = 255;
     s[3] = 255;//we usually store '\0' here as terminator, but we do not have to
-    	       //we can store any arbitrary data here
+               //we can store any arbitrary data here
 
     int * i = (int *) s;  //cast s to an integer pointer
-    printf("*i = %d\n", *i); 
-    //use characters as a generic container for data and then used pointer casting 
+    printf("*i = %d\n", *i);
+    //use characters as a generic container for data and then used pointer casting
     //to determine how to interpret that data. char array is an arbitrary container
     //that stores a bunch of bytes.
+    //*i = -1
 }
 
 // ----------------------------------------------------------------------------
 void byte_ordering() {
   unsigned int a = 0xdeadbeef;    //hex number
-  unsigned char * p = (unsigned char *) &a; 
+  unsigned char * p = (unsigned char *) &a;
 
   int i;
   printf("0x");
   for(i=0;i<4;i++){
     printf("%02x",p[i]);
   }
+  //0xefbeadde 
   printf("\n");
 }
 // ----------------------------------------------------------------------------
@@ -173,7 +185,9 @@ darray ---> | --+-'        '---'---'---'---'
     // adarray equals to &darray[0] which equals to &(&array[0])
     // a double array is a double pointer
     printf("*(*(darray+2)+2) = %d\n", *(*(darray+2)+2));
+    //*(*(darray+2)+2) = 11
     printf("     daray[2][2] = %d\n", darray[2][2]);
+    // daray[2][2] = 11
 }
 // ----------------------------------------------------------------------------
 void string_double_array_pointer_array() {
@@ -183,9 +197,11 @@ void string_double_array_pointer_array() {
 
     printf("str1:%p\n",str1);
     printf("str2:%p\n",str2); //which is at the higer address? why?
-                              //check the memory layout of your process 
+                              //check the memory layout of your process
                               //what lays at the bottom?
-    //this is an array of strings, each string is a char *	
+    //str1:"address"
+    //str2:"address"
+    //this is an array of strings, each string is a char *
     char * strings[]={"Go Pace!",
                      "Beat CUNY!",
                      "Crash SUNY!",
@@ -193,8 +209,15 @@ void string_double_array_pointer_array() {
     int i;
 
     printf("strings: %p\n",strings); //higher address or lower address? why?
+    //strings: "address"
     for(i=0;i<4;i++){
       printf("strings[%d]: '%s' %p\n",i,strings[i],strings[i]);
+      /*
+      strings[0]: 'Go Pace!'
+      strings[1]: 'Beat CUNY!'
+      strings[2]: 'Crash SUNY!'
+      strings[3]: 'Enjoy CS232'
+      */
       //are they in higher address or lower address? why?
   }
 }
@@ -213,8 +236,11 @@ void string_equal() {
         printf("Crash SUNY!\n");
     }
     printf("\n");
+    //Beat CUNY!
     printf("s1: %p == s2: %p? \n", s1, s2);
+    //s1: address == s2: address
     printf("s3: %p == s4: %p? \n", s3, s4);
+    //s3: address == s4: address
 }
 //Now do you understand why we need string lib, like strcmp?
 // ----------------------------------------------------------------------------
@@ -226,17 +252,21 @@ void trace_pointers() {
     int *t = &a;
     int *u = NULL;
     printf("%d %d\n", a, *t);
+    //42, 42
 
     c = b;
     u = t;
     printf("%d %d\n", c, *u);
+    //7, 42
 
     a = 8;
     b = 8;
     printf("%d %d %d %d\n", b, c, *t, *u);
+    //8, 7, 8, 8
 
     *t = 123;
     printf("%d %d %d %d %d\n", a, b, c, *t, *u);
+    //8, 8, 7, 123, 8
 }
 
 // ----------------------------------------------------------------------------
@@ -266,12 +296,15 @@ void trace_structs_pointers()
     my_stuff.a = &temp;
     my_stuff.b = 1;
     printf("a=%d b=%d\n", *(my_stuff.a), my_stuff.b);
+    //a=0, b=1
 
     foo(my_stuff);
     printf("a=%d b=%d\n", *(my_stuff.a), my_stuff.b);
+    //a=0, b=1
 
     bar(&my_stuff);
     printf("a=%d b=%d\n", *(my_stuff.a), my_stuff.b);
+    //a=4, b=5
 }
 
 // ----------------------------------------------------------------------------
@@ -281,7 +314,9 @@ void readonly_vs_stack() {
 
   str1[0] = 't';
   printf("str1: %s \n",str1);
+  //str1:This is a locust tree
   str2[0] = 't';
   printf("str2: %s \n",str2);
+  //nothing - segentation fault
 }
 
