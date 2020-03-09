@@ -4,25 +4,82 @@
 typedef struct snode node_t;
 
 node_t * setup() {
-    //TODO:copy setup func from task2
+    //TODO:copy setup func from task1
+    node_t *head, *node1, *node2, *node3;
+    node1 = malloc(sizeof(node_t));
+    node2 = malloc(sizeof(node_t));
+    node3 = malloc(sizeof(node_t));
+    
+    node1->length = 6;
+    node2->length = 6;
+    node3->length = 5;
+
+    strcpy(node1->str, "hello");
+    strcpy(node2->str, "there");
+    strcpy(node3->str, "prof");
+
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = NULL;
+    
+    head = node1;
+   return head;
 }
 
-void teardown(/*what parameter?*/) {
+void teardown(node_t * head) {
     //TODO: free all dynamic memory you requested.
     //Please complete the prototype of teardown.
     //You are not allowed to use globals
+   int i;
+   node_t * tempNext;
+   for(i = 0; i < 3; i++){
+      tempNext = head->next;
+      free(head);
+      head = tempNext;
+   }
+   free(head); 
 }
 
 void add(node_t ** head, char * str, int length){
-    //TODO: copy add func from task2
+    //TODO: implement add to add a new node to front, pointed by head
+    node_t *newNode;
+    newNode = malloc(sizeof(node_t));
+    newNode->length = length;
+    strcpy(newNode->str, str);
+    newNode->next = *head;
+    *head = newNode;
 }
 void delete_node_at(node_t ** head, int idx) {
     //TODO: implement delete a node based on index
 	//deletes a node at index idx, which ranges from zero to the length of the list - 1.
+   node_t *delete, *nextNode;
+   int i;
+   delete = malloc(sizeof(*head));
+   nextNode = malloc(sizeof(node_t));
+   delete = *head;
+   for(i = 0; i < idx; i++){
+      delete = delete->next;
+   }
+   nextNode = delete->next;
+   delete->length = nextNode->length;
+   strcpy(delete->str, nextNode->str);
+   delete->next = nextNode->next;
 } 
 void delete_node_key(node_t **head, char * key) {
     //TODO: implement delete a node based on key
 	//given a certain key, find and delete. 
+   node_t *curr, *nextNode;
+   curr = malloc(sizeof(*head));
+   nextNode = malloc(sizeof(node_t));
+   curr = *head;
+   while(curr->next != NULL){
+       if(strcmp(curr->str, key) == 0){
+           nextNode = curr->next;
+           curr->length = nextNode->length;
+           strcpy(curr->str, nextNode->str);
+           curr->next = nextNode->next;
+       }
+   }
 }
 //You can ignore the following code for testing
 void dump_all(node_t*);
@@ -32,7 +89,7 @@ int main (int argc, char ** argv) {
     delete_node_key(&head, "prof");
     delete_node_at(&head, 0);
     dump_all(head);
-    teardown(/*what argument?*/);
+    teardown(head);
     return 0;
 }
 
