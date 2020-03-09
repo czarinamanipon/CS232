@@ -34,6 +34,7 @@ node_t * setup() {
    return head;
 }
 
+<<<<<<< HEAD
 void teardown(node_t * head) {
     //TODO: free all dynamic memory you requested.
     //Please complete the prototype of teardown.
@@ -46,6 +47,12 @@ void teardown(node_t * head) {
       head = tempNext;
    }
    free(head);  
+=======
+void teardown(/*what parameter?*/) {
+    //TODO: free all dynamic memory you requested.
+    //Please complete the prototype of teardown.
+    //You are not allowed to use globals
+>>>>>>> 240f91a838b43d80908230dfd592d2c080325811
 }
 
 //You can ignore the following code for testing
@@ -53,7 +60,11 @@ void dump_all(node_t*);
 int main (int argc, char ** argv) {
     node_t * head = setup();
     dump_all(head);
+<<<<<<< HEAD
     teardown(head);
+=======
+    teardown(/*what argument?*/);
+>>>>>>> 240f91a838b43d80908230dfd592d2c080325811
     return 0;
 }
 
