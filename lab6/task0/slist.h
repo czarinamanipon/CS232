@@ -38,6 +38,7 @@
 struct slist {
   struct snode *front; // front node
   struct snode *back;  // back node
+  int size;
 };
 
 /**
@@ -103,5 +104,7 @@ uint32_t slist_length(struct slist *l);
  */
 void slist_delete(struct slist *l, char *str);
 
+struct snode * slist_get_front(struct slist *l);
+struct snode * slist_get_back(struct slist *l);
 
 #endif /* _slist_H_ */
