@@ -103,5 +103,8 @@ uint32_t slist_length(struct slist *l);
  */
 void slist_delete(struct slist *l, char *str);
 
+struct snode * slist_get_front(struct slist *l);
+struct snode * slist_get_back(struct slist *l);
+struct snode *slist_find_at(struct slist *l, int index);
 
 #endif /* _slist_H_ */

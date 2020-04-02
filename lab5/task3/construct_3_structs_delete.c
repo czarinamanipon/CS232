@@ -30,13 +30,14 @@ void teardown(node_t * head) {
     //TODO: free all dynamic memory you requested.
     //Please complete the prototype of teardown.
     //You are not allowed to use globals
-   int i;
    node_t * tempNext;
-   for(i = 0; i < 3; i++){
-      tempNext = head->next;
+   tempNext = head->next;
+   do{
       free(head);
       head = tempNext;
-   }
+      tempNext = head->next;
+   } while(tempNext != NULL);
+   free(tempNext);
    free(head); 
 }
 
@@ -52,33 +53,40 @@ void add(node_t ** head, char * str, int length){
 void delete_node_at(node_t ** head, int idx) {
     //TODO: implement delete a node based on index
 	//deletes a node at index idx, which ranges from zero to the length of the list - 1.
-   node_t *delete, *nextNode;
+   node_t *curr, *nextNode;
    int i;
-   delete = malloc(sizeof(*head));
-   nextNode = malloc(sizeof(node_t));
-   delete = *head;
+   curr = *head;
    for(i = 0; i < idx; i++){
-      delete = delete->next;
+      curr = curr->next;
    }
-   nextNode = delete->next;
-   delete->length = nextNode->length;
-   strcpy(delete->str, nextNode->str);
-   delete->next = nextNode->next;
+   nextNode = curr->next;
+   curr->length = nextNode->length;
+   strcpy(curr->str, nextNode->str);
+   curr->next = nextNode->next;
+   free(nextNode);
 } 
 void delete_node_key(node_t **head, char * key) {
     //TODO: implement delete a node based on key
 	//given a certain key, find and delete. 
-   node_t *curr, *nextNode;
-   curr = malloc(sizeof(*head));
-   nextNode = malloc(sizeof(node_t));
+   node_t *curr, *prev;
    curr = *head;
-   while(curr->next != NULL){
-       if(strcmp(curr->str, key) == 0){
-           nextNode = curr->next;
-           curr->length = nextNode->length;
-           strcpy(curr->str, nextNode->str);
-           curr->next = nextNode->next;
-       }
+   int matchFound = 0;
+   do{
+      if(strcmp(curr->str, key) == 0){
+         matchFound = 1;
+      }else{
+         prev = curr;
+         curr = curr->next;
+      }
+   }while ((curr != NULL) && !(matchFound));
+  
+   if(matchFound){
+      if(curr->next != NULL){
+         prev->next = curr->next;
+      }else if(curr->next == NULL){
+         prev->next = NULL;
+      }
+      free(curr);
    }
 }
 //You can ignore the following code for testing
