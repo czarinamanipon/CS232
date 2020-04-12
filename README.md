@@ -1,2 +1,2 @@
 # CS232
-CS232 Lab Work
+Coursework for Spring 2020 CS 232: Computer Organization
