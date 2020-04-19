@@ -5,6 +5,7 @@ subl $16,%esp
 2.Does “int a, b, c, d;” shrink or grow the stack? How many bytes are allocated on stack for a, b, c, and d? Explain them using instruction from question 1.
 
 The declaration of the int variables shrinks the stack because the assembly instruction subtracts 16 bits from the top of the stack.
+JYM: nope, subl 16 grows the stack
 
 3.What instruction is “b=2;” converted to? How is the address of variable b formed in the instruction?
 movl $2,-8(%ebp)

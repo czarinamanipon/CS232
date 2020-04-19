@@ -4,4 +4,4 @@ cmpl $6,-4(%ebp)
 Both statements of the if statement will execute.
 3.Can you rewrite the condition with “jg” in place of “jle”? Why or why not?
 You cannot replace jle with jg because then comparison would only be true if 6 is greater than a.
-
+JYM: it is possible to swap jg with jle as long as two code blocks are swapped too
