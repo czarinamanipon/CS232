@@ -25,6 +25,8 @@ node_t * construct_3() {
     x->next = y;
     y->next = z;
     z->next = x;
+    
+    return x;
 
 }
 
