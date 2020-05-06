@@ -1,3 +1,8 @@
 #1: Explain the newly-added function mruUpdate(), briefly outlining its purpose, how it works, and why we would want or need such a function in our fully-associative cache simulator.
-
+mruUpdate() updates mru[] to reflect which lines were most recently used and which ones contain more outdate data and are hardly used. This is done by storing the indices in
+a sort of queue where the least used index ends up as the last in the array while the more frequently used appear earlier in the array. In the case of a cache miss, the data is
+stored in the last index of mru[] because as the least recently-used index, the data in it can most likely be discarded as it's no longer needed and the limited space in the cache is
+maintained. This function helps represent how cache only stores the important data at a given moment and gets rid of older less important data to make room for newer data.
 #2: Compile and execute the fully-associative cache simulator in the task. Report the final number of hits and accesses output by the code. Based on the pattern of cache hits, estimate the hit rate of the given trace in the steady state (once the compulsory misses are accounted for).
+Hits = 76, Accesses = 103, Hit ratio = 0.737864
+Estimated steady state hit rate: 68 / 95 = 0.715789

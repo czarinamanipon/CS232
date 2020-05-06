@@ -1,98 +1,98 @@
 Table for yi.trace when set index bits =4, block offset bit = 4 using direct map cache:
 
 ----------------------------------------------------------------
- trace	|Your analysis(miss/hit, set/index id)	|csim-ref output
-----------------------------------------------------------------   
- L 10,1	| 0x10 = 0b 0001 0000                   |
-        | miss - nothing is loaded in cache yet |
-        | Set id = 0b0001	 	        |
- M 20,1	| 0x20 = 0b 0000 0001 0100              |	 	 
-        | Set id = 0b0001			|
-        | hit - the line at the id exists	|
- L 22,1	| 0x22 = 0b 0010 0010 	 		|
-        | Set id = 0b0010			|	 	 
-        | Miss - id not in cache yet		|
- S 18,1	| 0x18 = 0b 0001 1000			|
-        | Set id = 0b0001			|
-        | Hit = line at id exists		|
- L 110,1| 0x110 = 0b 0001 0001 0000		|
-        | set id = 0b0001			|
-        | miss eviction - line already taken by |
-        | 10 	 				|
- L 210,1| 0x210 = 0b 0010 0001 0000		|
-        | set id = 0b0001			|
-        | miss eviction-line already taken	|
-        | by 110	 	 		|
- M 12,1	| 0x12 = 0b 0001 0010			|
-        | set id = 0b 0001			|
-        | hit - line at 0001 exists		|	 	 
+ trace	Your analysis(miss/hit, set/index id)	csim-ref output
+----------------------------------------------------------------
+ L 10,1	 0x10 = 0b 0001 0000                   hits:4
+         miss - nothing is loaded in cache yet misses:5
+         Set id = 0b0001	 	                   evictions:3
+ M 20,1	 0x20 = 0b 0000 0001 0100
+         Set id = 0b0001
+         hit - the line at the id exists
+ L 22,1	 0x22 = 0b 0010 0010
+         Set id = 0b0010
+         Miss - id not in cache yet
+ S 18,1	 0x18 = 0b 0001 1000
+         Set id = 0b0001
+         Hit = line at id exists
+ L 110,1 0x110 = 0b 0001 0001 0000
+         set id = 0b0001
+         miss eviction - line already taken by
+         10
+ L 210,1 0x210 = 0b 0010 0001 0000
+         set id = 0b0001
+         miss eviction-line already taken
+         by 110
+ M 12,1	 0x12 = 0b 0001 0010
+         set id = 0b 0001
+         hit - line at 0001 exists
 -----------------------------------------------------------------
 
 Table for yi.trace when set index bits =4, block offset bit = 4 using 2 lines per set:
 ----------------------------------------------------------------
- trace	|Your analysis(miss/hit, set/index id)	|csim-ref output
----------------------------------------------------------------- 
- L 10,1	| 0x10 = 0b 0000 0001 0000, id = 0001	|
-    	| miss - nothing loaded into cache yet  |	 	 
- M 20,1	| 0x20 = 0b 0000 0010 0000, id = 0010	|
-        | miss - line doesn't exist at id yet	|	 	 
- L 22,1	| 0x22 = 0b 0000 0010 0010, id = 0010	|
-        | miss - line1 at id taken by 20 but	|
-        | line2 is free				|	 	 
- S 18,1	| 0x18 = 0b 0001 1000, id = 0001	|
-        | hit - data from 10 exists		|
-        | at line1 of id			|	 	 
- L 110,1| 0x110 = 0b 0001 0001 0000, id = 0001	|
-        | miss - line1 is taken by 10 but	| 
-        | line2 at id is free still		|	 	 
- L 210,1| 0x210 = 0b 0010 0001 0000, id = 0001	|
-        | miss eviction - both lines already	|
-        | taken	by 10 and 110			|	 	 
- M 12,1	| 0x12 = 0b 0001 0010, id = 0010	|
-        | miss eviction - both lines already    |
-        | taken by 20 and 22			|	 	 
+ trace	Your analysis(miss/hit, set/index id)	csim-ref output
+----------------------------------------------------------------
+ L 10,1	 0x10 = 0b 0000 0001 0000, id = 0001	hits: 4
+    	 miss - nothing loaded into cache yet  	misses: 5
+ M 20,1	 0x20 = 0b 0000 0010 0000, id = 0010	evictions:3
+         miss - line doesn't exist at id yet
+ L 22,1	 0x22 = 0b 0000 0010 0010, id = 0010
+         miss - line1 at id taken by 20 but
+         line2 is free
+ S 18,1	 0x18 = 0b 0001 1000, id = 0001
+         hit - data from 10 exists
+         at line1 of id
+ L 110,1 0x110 = 0b 0001 0001 0000, id = 0001
+         miss - line1 is taken by 10 but
+         line2 at id is free still
+ L 210,1 0x210 = 0b 0010 0001 0000, id = 0001
+         miss eviction - both lines already
+         taken	by 10 and 110
+ M 12,1	 0x12 = 0b 0001 0010, id = 0010
+         miss eviction - both lines already
+         taken by 20 and 22
 ----------------------------------------------------------------
 
 Table for yi.trace when set index bits =4, block offset bit = 2 using direct map cache:
 -----------------------------------------------------------------
- trace	|Your analysis(miss/hit, set/index id)	|csim-ref output
------------------------------------------------------------------   
- L 10,1	| id = 0100, miss - nothing loaded yet	|	 	 
- M 20,1	| id = 1000, miss - line not in		|
-        | cache yet				|	 
- L 22,1	| id = 1000, miss eviction - line	|
-        | already taken by 20			|	 	 
- S 18,1	| id = 0110. miss - nothing at address	|
-        | in cache				|	 	 
- L 110,1| id = 0100, miss eviction - line	|
-          already taken by 10			|	 	 
- L 210,1| id = 0100, miss eviction - line	|
-	| already taken by 110			|	 	 
- M 12,1	| id = 0100, miss eviction - line	|
-        | already taken by 210			|
------------------------------------------------------------------	 	 
+ trace	Your analysis(miss/hit, set/index id)	csim-ref output
+-----------------------------------------------------------------
+ L 10,1	 id = 0100, miss - nothing loaded yet
+ M 20,1	 id = 1000, miss - line not in
+         cache yet
+ L 22,1	 id = 1000, miss eviction - line
+         already taken by 20
+ S 18,1	 id = 0110. miss - nothing at address
+         in cache					 	 
+ L 110,1 id = 0100, miss eviction - line
+          already taken by 10
+ L 210,1 id = 0100, miss eviction - line
+	 already taken by 110
+ M 12,1	 id = 0100, miss eviction - line
+         already taken by 210
+-----------------------------------------------------------------
 Table for dave.trace when set index bits =4, block offset bit = 4 using direct map cache:
 -----------------------------------------------------------------
- trace	|Your analysis(miss/hit, set/index id)	|csim-ref output
------------------------------------------------------------------   
- L 10,4	| id = 0001, miss - nothing loaded yet	|	 	 
- S 18,4	| id = 0001, hit - 10 exists at id	|	 	 
- L 20,4	| id = 0010, miss - line not in cache	|
-        | yet					|	 	 
- S 28,4	| id = 0010, hit - line not in cache	|	 	 
- S 50,4	| id = 0101, miss - line not in cache	|	 	 
+ trace	Your analysis(miss/hit, set/index id)	csim-ref output
+-----------------------------------------------------------------
+ L 10,4	 id = 0001, miss - nothing loaded yet	hits: 3
+ S 18,4	 id = 0001, hit - 10 exists at id		 	misses: 6
+ L 20,4	 id = 0010, miss - line not in cache	evictions: 3
+         yet
+ S 28,4	 id = 0010, hit - line not in cache
+ S 50,4	 id = 0101, miss - line not in cache
 -----------------------------------------------------------------
 
 Table for dave.trace when set index bits =4, block offset bit = 2 using direct map cache:
 -----------------------------------------------------------------
- trace	|Your analysis(miss/hit, set/index id)	|csim-ref output
------------------------------------------------------------------   
- L 10,4	| id = 0100, miss - nothing loaded yet	|	 	 
- S 18,4	| id = 0110, miss - no data at line	|
-        | in cache yet				|	 	 
- L 20,4	| id = 1000, miss - line not in cache	|
-	| yet					|	 	 
- S 28,4	| id = 1010, miss - no data at line in	|
-        | cache yet				|	 	 
- S 50,4	| id = 0100, hit - 10 loaded at id	|
-----------------------------------------------------------------	 	 
+ trace	Your analysis(miss/hit, set/index id)	csim-ref output
+-----------------------------------------------------------------
+ L 10,4	 id = 0100, miss - nothing loaded yet	hits: 0
+ S 18,4	 id = 0110, miss - no data at line	  misses: 5
+         in cache yet					 	              evictions: 1
+ L 20,4	 id = 1000, miss - line not in cache
+	       yet
+ S 28,4	 id = 1010, miss - no data at line in
+         cache yet
+ S 50,4	 id = 0100, hit - 10 loaded at id
+----------------------------------------------------------------
