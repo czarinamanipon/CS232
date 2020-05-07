@@ -63,7 +63,8 @@ struct snode* slist_find(struct slist *l, char *str){
       if(strcmp(curr->str, str)){
           return curr;
       }
-   }while(curr->next != NULL);
+      curr = curr->next;
+   }while(curr != NULL);
    return NULL;
 }
 
@@ -94,9 +95,10 @@ void slist_destroy(struct slist *l){
 void slist_traverse(struct slist *l){
    struct snode *curr;
    curr = l->front;
-   do{
+   while(curr != NULL){
       printf("%s\n", curr->str);
-   }while(curr->next != NULL);
+      curr = curr->next;
+   }
 }
 
 
@@ -125,13 +127,18 @@ uint32_t slist_length(struct slist *l){
 void slist_delete(struct slist *l, char *str){
    struct snode *curr, *prev;
    curr = l->front;
+   prev = l->front;
    do{
-      prev = curr;
       if(strcmp(curr->str, str)){
-          prev->next = curr->next;
-          snode_destroy(curr);
+          if(curr == l->front){
+             l->front = curr->next;
+          } else {
+             prev->next = curr->next;
+             snode_destroy(curr);
+          }
           break;
       }
-      curr = curr->next;
+      prev = curr;
+      curr = prev->next;
    }while(curr != NULL);
 }

@@ -6,7 +6,7 @@
 #define _snode_H_
 
 struct snode {
-   char *str;
+   char * str;
    struct snode *next; 
 };
 
